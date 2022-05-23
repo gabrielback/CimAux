@@ -1,12 +1,6 @@
-﻿
-;#NoEnv  ; Recommended for performance and compatibility with future AutoHotkey releases.
-; #Warn  ; Enable warnings to assist with detecting common errors.
-;SendMode Input  ; Recommended for new scripts due to its superior speed and reliability.
-SetWorkingDir %A_ScriptDir%  ; Ensures a consistent starting directory.
+﻿SetWorkingDir %A_ScriptDir%  ; Ensures a consistent starting directory.
 #SingleInstance Force
 
-
-; ShowTip(" |PASTAS| "),PathDisplay()
 
 F12::
 
@@ -27,7 +21,7 @@ Gui, Destroy
 Atualiza:
 CustomColor := #000000
 Gui, Color, CustomColor
-Gui +LastFound +AlwaysOnTop +ToolWindow  ; +ToolWindow avoids a taskbar button and an alt-tab menu item.
+Gui +LastFound +AlwaysOnTop +ToolWindow 
 Gui, Add, Button, w205 h20 x10 y20 gLauchAlterar ,&Alterar Pastas
 Gui, Add, Button, w100 h50 y+25 gLauchDirectory1 ,% ReadingPath(1)
 Gui, Add, Button, w100 h50 x+5 gLauchDirectory2 ,% ReadingPath(2)
@@ -54,7 +48,7 @@ If ErrorLevel
 If Errorlevel = 0
 	
 Gui, Add, Text, , Selecione a posição da pasta
-Gui +LastFound +AlwaysOnTop +ToolWindow  ; +ToolWindow avoids a taskbar button and an alt-tab menu item.
+Gui +LastFound +AlwaysOnTop +ToolWindow 
 Gui, Add, Button, w100 h50 y+5 gRunCalc1, Diretório1
 Gui, Add, Button, w100 h50 x+5 gRunCalc2, Diretório2
 Gui, Add, Button, w100 h50 x10 y+5  gRunCalc3, Diretório3
@@ -164,10 +158,10 @@ MovePath(Direction){
 		
 		Switch Direction
 			{
-			Case "LeftUp": WinMove, A,, % _Left-7, 1, % _Width/2+14, % _Height/2+7 ;left/up
-			Case "RightUp": WinMove, A,, % _Width/2-7, 1, % _Width/2+14, % _Height/2+7 ;right/up
-			Case "LeftDown": WinMove, A,, % _Left-7, _Height/2, % _Width/2+14, % _Height/2+7 ;left/down
-			Case "LeftRight": WinMove, A,, % _Width/2-7, _Height/2, % _Width/2+14, % _Height/2+7 ;Right/down
+			Case "LeftUp": WinMove, A,, % _Left-7, 1, % _Width/2+14, % _Height/2+7 
+			Case "RightUp": WinMove, A,, % _Width/2-7, 1, % _Width/2+14, % _Height/2+7 
+			Case "LeftDown": WinMove, A,, % _Left-7, _Height/2, % _Width/2+14, % _Height/2+7 
+			Case "LeftRight": WinMove, A,, % _Width/2-7, _Height/2, % _Width/2+14, % _Height/2+7 
 			Default: MsgBox, Error(Errorlevel)
 				
 			}      

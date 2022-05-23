@@ -1,21 +1,19 @@
-﻿#NoEnv ; Recommended for performance and compatibility with future AutoHotkey releases.
-; #Warn  ; Enable warnings to assist with detecting common errors.
-SendMode Input ; Recommended for new scripts due to its superior speed and reliability.
-SetWorkingDir %A_ScriptDir% ; Ensures a consistent starting directory.
+﻿#NoEnv 
+SendMode Input 
+SetWorkingDir %A_ScriptDir%
 #SingleInstance, force
 SetCapsLockState, On
-try XL := ComObjActive("Excel.Application") 				;VERIFICA SE EXCEL ESTÁ RODANDO
+try XL := ComObjActive("Excel.Application") 			
 Catch { 
-    XL := ComObjCreate("Excel.Application") 			;CRIA OBJETO (C.O.M.) EXCEL CASO EXCEL NÃO ESTEJA RODANDO
-    XL.Visible := 0											;TORNA OBJETO EXCEL INVISIVEL - O CONTRÁRIO ABRE UMA NOVA PLANILHA DE EXCEL
+    XL := ComObjCreate("Excel.Application") 		
+    XL.Visible := 0											
 }
 Progress, b w200, Auto Apontamento, Processo Produtivo, MyTitle
-Progress, 100 ; Set the position of the bar to 50%.
+Progress, 100
 Sleep, 1000
 Progress, Off
 
 ShowTip(" | APONTAMENTO | `n CTRL+F5(REINICIAR)")
-; Inicio
 
 DirIni := A_MyDocuments "\Directory.ini"
 
@@ -28,12 +26,12 @@ if FileExist(DirIni){
 }
 
 DirIniRun:
-    global Xlpp 										;CAMINHO PLANILHA PROCESSO PRODUTIVO
-    global XlAp 										;CAMINHO PLANILHA APONTAMENTO
+    global Xlpp 										
+    global XlAp 										
 
     Directory := A_MyDocuments "\Directory.ini"
-    IniRead, Xlpp, %Directory%, section10, key		;FAZ LEITURA DO ARQUIVO DIR.INI PARA E JOGA PLANILHA DE PROCESSO PRODUTIVO NA VARIAVEL XlPp
-    IniRead, XlAp, %Directory%, section20, key		;FAZ LEITURA DO ARQUIVO DIR.INI PARA E JOGA PLANILHA DE APONTAMENTO NA VARIAVEL XlAp
+    IniRead, Xlpp, %Directory%, section10, key
+    IniRead, XlAp, %Directory%, section20, key
 
     if FileExist(Xlpp){
         Goto, MainGui
@@ -51,15 +49,15 @@ DirIniRun:
 MainGui:
     Sleep, 100
     global CommentCheck
-    If (XlAp = Null) ;PULA LEITURA SPLIT DO MES, CASO A PLANILHA NÃO SEJA RETORNADA
+    If (XlAp = Null)
         Goto, SkipMonth
-    SplitDate := ComObjGet(XlAp).Sheets("apontamento").Range("C2").Text ;CRIA OBJETO COM VARIAVEL InitDate APONTANDO DATA
-    StringSplit, DateSplited, SplitDate, /, ;FAZ SPLIT DA VARIAVEL POR (/) E JOGA TODAS AS SUBDIVISOES EM UM ARRAY na variavel DateToGui1, DateToGui2, DateToGui3
+    SplitDate := ComObjGet(XlAp).Sheets("apontamento").Range("C2").Text 
+    StringSplit, DateSplited, SplitDate, /, 
 SkipMonth:
     Gui, Destroy
     CustomColor := #000000
     Gui, Color, CustomColor
-    Gui +LastFound +AlwaysOnTop ;+ToolWindow  ; +ToolWindow avoids a taskbar button and an alt-tab menu item.
+    Gui +LastFound +AlwaysOnTop
     Gui, Add, Button, w245 h30 x10 y20 gRunAuto ,&Iniciar apontamento automatizado
     Gui, Add, Button, w205 h20 X10 y+5 gRunAp ,Planilha &Apontamento
     Gui, Add, Button, w35 h20 x+5 gSelectAP ,% monthConvert(DateSplited2)
@@ -80,7 +78,7 @@ SkipMonth:
     DateSplited2 := 0
 return
 
-SelectAp: 													;SELECIONA PLANILHA DE APONTAMENTO
+SelectAp:
     Gui, Destroy
     FileSelectFile, XlAp,,,Selecione o arquivo que deseja Apontar, *Apontamento*.xlsx
     if ErrorLevel{
@@ -90,7 +88,7 @@ SelectAp: 													;SELECIONA PLANILHA DE APONTAMENTO
     IniWrite, % XlAp, %Directory%, section20, key
     Goto, MainGui
 
-SelectPP: 													;SELECIONA PROCESSO PRODUTIVO E SALVA EM UM ARQUIVO (.INI) EM MEUS DOCUMENTOS
+SelectPP:
     Gui, Destroy
     FileSelectFile, Xlpp,,,Selecione o arquivo ProcessoProdutivo.xlsx,ProcessoProdutivo.xlsx
     if ErrorLevel{
@@ -101,11 +99,11 @@ SelectPP: 													;SELECIONA PROCESSO PRODUTIVO E SALVA EM UM ARQUIVO (.INI
     IniWrite, % Xlpp, %Directory%, section10, key
     Goto, MainGui
 
-GuiClose: 													;FECHA APLICAÇÃO
+GuiClose:
 ExitApp
 return
 
-RunAp: 														;INICIA PLANILHA DE APONTAMENTO PARA ATUALIZAÇÃO
+RunAp:
     if (XlAp){
         Run % XlAp ,,Maximize
     }Else{
@@ -113,7 +111,7 @@ RunAp: 														;INICIA PLANILHA DE APONTAMENTO PARA ATUALIZAÇÃO
     }
 return
 
-RunPp: 														;INICIA PLANILHA DE PROCESSO PRODUTIVO PARA ATUALIZAÇÃO
+RunPp:
     if (Xlpp){
         Run % Xlpp,,Maximize
     }Else{
@@ -121,7 +119,7 @@ RunPp: 														;INICIA PLANILHA DE PROCESSO PRODUTIVO PARA ATUALIZAÇÃO
     }
 return
 
-GB:															;LINK PARA CONTATO
+GB:
     Run, www.linkedin.com/in/gabrielluizback,,Maximize
 return
 
@@ -144,30 +142,29 @@ inicio:
     {	
 
         filepath1 := XlAp
-        planilha1 := ComObjGet(FilePath1) 				;OBJETO PARA APONTAMENTO
+        planilha1 := ComObjGet(FilePath1)
 
         filepath2 := Xlpp
-        planilha2 := ComObjGet(FilePath2) 				;OBJETO PARA PROCESSO PRODUTIVO
+        planilha2 := ComObjGet(FilePath2)
 
         Cell := "A"Ini
-        global Var1 := planilha1.Sheets("apontamento").Range(Cell).Offset(0,1).text 					;CELULA 2 (ORDEM DE SERVIÇO)
-        ;global Foundcell1 := planilha2.ActiveSheet.Range("A:A").Find(Var1).offset(0,1).Text 			;PROCURA (PROCESSO PRODUTIVO) NA PLANILHA PROCESSO PRODUTIVO BASEADO NA (O.S.) COLETADA NA PLANILHA APONTAMENTO
-        global Foundcell1 := planilha1.Sheets("OS").Range("A:A").Find(Var1).offset(0,1).Text 			;PROCURA (PROCESSO PRODUTIVO) NA ABA OS BASEADO NA (O.S.) COLETADA NA PLANILHA APONTAMENTO
-        global FoundCell2 := planilha1.Sheets("apontamento").Range(Cell).Offset(0,0).text 				;CELULA 1 (PROCESSO PRODUTIVO)
-        global FoundCell3 := planilha1.Sheets("apontamento").Range(Cell).Offset(0,2).text 				;CELULA 3 (DATA INICIO)
-        global FoundCell4 := planilha1.Sheets("apontamento").Range(Cell).Offset(0,3).text 				;CELULA 4 (HORA INICIO)
-        global FoundCell5 := planilha1.Sheets("apontamento").Range(Cell).Offset(0,4).text 				;CELULA 5 (DATA FINAL)
-        global FoundCell6 := planilha1.Sheets("apontamento").Range(Cell).Offset(0,5).text 				;CELULA 6 (HORA FINAL)
-        global FoundCell14 := planilha1.Sheets("apontamento").Range(Cell).Offset(0,14).text 			;COMENTARIO
+        global firstLayer := planilha1.Sheets("apontamento").Range(Cell).Offset(0,1).text
+        global Foundcell1 := planilha1.Sheets("OS").Range("A:A").Find(firstLayer).offset(0,1).Text
+        global FoundCell2 := planilha1.Sheets("apontamento").Range(Cell).Offset(0,0).text 
+        global FoundCell3 := planilha1.Sheets("apontamento").Range(Cell).Offset(0,2).text
+        global FoundCell4 := planilha1.Sheets("apontamento").Range(Cell).Offset(0,3).text
+        global FoundCell5 := planilha1.Sheets("apontamento").Range(Cell).Offset(0,4).text
+        global FoundCell6 := planilha1.Sheets("apontamento").Range(Cell).Offset(0,5).text
+        global FoundCell14 := planilha1.Sheets("apontamento").Range(Cell).Offset(0,14).text
 
-        if(FoundCell2){																					;SE HOUVER PROCESSO PRODUTIVO
+        if(FoundCell2){
             Post(300/SpeedF)
 
         }else{
             MsgBox,, PROCESSO PRODUTIVO, Linha %Ini% Não foi encontrada`n`nFinalizando...,3
             TrayTip Auto Apontamento, Apontamento Finalizado
             ToolTip
-            Sleep 3000 ; Let it display for 3 seconds.
+            Sleep 3000
             HideTrayTip()
             Goto, MainGui
             return
@@ -180,15 +177,8 @@ inicio:
 
 return
 
-;
-
-;~~~~~~~~~~~FUNÇÕES~~~~~~~~~~~~~~~~
-
-;
-Post(TimerPost) { 											;IMPUT DE TECLAS NO PROGRAMA DE APONTAMENTO (GRV)
-
-    ;IfWinNotActive, ahk_class TFRMENU
-    ;WinWait, ahk_class TFRMENU, ,
+;Functions
+Post(TimerPost) {
     state := GetKeyState("CapsLock", "T")
     if (state = 1) {
         Send, % FoundCell1
@@ -224,37 +214,14 @@ Post(TimerPost) { 											;IMPUT DE TECLAS NO PROGRAMA DE APONTAMENTO (GRV)
 
 }
 
-OkCancelExit(confirm_message) 								;MENSAGEM DE CANCELAMENTO
+OkCancelExit(confirm_message)
 {
     msgbox, 4097, , %confirm_message%
     IfMsgBox Ok
     Reload
     SetCapsLockState, On
 }
-ShowTip(s:="", pos:= "X1160y5", color:="Red|00FFFF") { 		;EXIBE NOME DO PROGRAMA PARA INDICAR QUE O MESMO ESTÁ RODANDO
-    static bak, idx
-    if (bak=color "," pos "," s)
-        return
-    bak:=color "," pos "," s
-    SetTimer, ShowTip_ChangeColor, Off
-    Gui, ShowTip: Destroy
-    if (s="")
-        return
-    Gui, ShowTip: +LastFound +AlwaysOnTop +ToolWindow -Caption +E0x08000020
-    Gui, ShowTip: Color, FFFFF0
-    WinSet, TransColor, FFFFF0 150
-    Gui, ShowTip: Margin, 10, 5
-    Gui, ShowTip: Font, Q3 s9 bold
-    Gui, ShowTip: Add, Text,, %s%
-    Gui, ShowTip: Show, NA %pos%, ShowTip
-    SetTimer, ShowTip_ChangeColor, 1000
-ShowTip_ChangeColor:
-    Gui, ShowTip: +AlwaysOnTop
-    r:=StrSplit(SubStr(bak,1,InStr(bak,",")-1),"|")
-    Gui, ShowTip: Font, % "Q3 c" r[idx:=Mod(Round(idx),r.length())+1]
-    GuiControl, ShowTip: Font, Static1
-return
-}
+
 
 monthConvert(month){
     Switch month
@@ -278,10 +245,10 @@ monthConvert(month){
 }
 
 HideTrayTip() {
-    TrayTip ; Attempt to hide it the normal way.
+    TrayTip
     if SubStr(A_OSVersion,1,3) = "10." {
         Menu Tray, NoIcon
-        Sleep 200 ; It may be necessary to adjust this sleep.
+        Sleep 200
         Menu Tray, Icon
     }
 }
@@ -319,5 +286,27 @@ RETURN
 
 ~^F5::Reload
 
-
-
+ShowTip(s:="", pos:= "X1160y5", color:="Red|00FFFF") {
+    static bak, idx
+    if (bak=color "," pos "," s)
+        return
+    bak:=color "," pos "," s
+    SetTimer, ShowTip_ChangeColor, Off
+    Gui, ShowTip: Destroy
+    if (s="")
+        return
+    Gui, ShowTip: +LastFound +AlwaysOnTop +ToolWindow -Caption +E0x08000020
+    Gui, ShowTip: Color, FFFFF0
+    WinSet, TransColor, FFFFF0 150
+    Gui, ShowTip: Margin, 10, 5
+    Gui, ShowTip: Font, Q3 s9 bold
+    Gui, ShowTip: Add, Text,, %s%
+    Gui, ShowTip: Show, NA %pos%, ShowTip
+    SetTimer, ShowTip_ChangeColor, 1000
+ShowTip_ChangeColor:
+    Gui, ShowTip: +AlwaysOnTop
+    r:=StrSplit(SubStr(bak,1,InStr(bak,",")-1),"|")
+    Gui, ShowTip: Font, % "Q3 c" r[idx:=Mod(Round(idx),r.length())+1]
+    GuiControl, ShowTip: Font, Static1
+return
+}

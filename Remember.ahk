@@ -1,7 +1,6 @@
 #SingleInstance, Force
 SendMode Input
 SetWorkingDir, %A_ScriptDir%
-; #IfWinActive ahk_exe CimatronE.exe
 
 
 
@@ -26,7 +25,7 @@ SetWorkingDir, %A_ScriptDir%
 		ShowTip_ChangeColorRemember:
 		Gui, ShowTip: +AlwaysOnTop
 		guardaCores:=StrSplit(SubStr(bkpParametros,1,InStr(bkpParametros,",")-1),"|")
-		Gui, ShowTip: Font, % "Q3 c" guardaCores[index:=Mod(Round(index),guardaCores.length())+1] ; acessa posição 1 ou 2 do array
+		Gui, ShowTip: Font, % "Q3 c" guardaCores[index:=Mod(Round(index),guardaCores.length())+1]
 		GuiControl, ShowTip: Font, Static1
 		return
 	}
