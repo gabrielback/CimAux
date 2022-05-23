@@ -3,7 +3,7 @@
  ## CimatronApp
   This is a tool based on autohotkey scripts, with the aim of making some tasks easier on the cimatron 15.
   
-  ## Some commands
+  ## Commands:
   
   * F1 - Help.
   * F2 - Not assigned. Because f2 is very important for renaming resources.
