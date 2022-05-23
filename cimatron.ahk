@@ -7,8 +7,6 @@ ShowTip(" |CIMATRON|")
     IfWinActive, ahk_class #32770
         ControlClick, , Ok, , , 1,
 
-    ; IfWinActive, ahk_class #32770
-    ; ControlClick, , Ok, , , 1,
 
 Return
 ::SIM::
@@ -27,7 +25,6 @@ Return
 Return
 
 Return
-;expande programas
 ::EXP:: 	
     Loop, 200
     {
@@ -35,7 +32,7 @@ Return
         sleep, 20
     }
 Return
-~F5::	;salva e escreve (_nc)
+~F5::	
     Send, {CTRLDOWN}s{CTRLUP}
 
     IfWinActive, ahk_class XTPMainFrame
@@ -47,7 +44,6 @@ Return
             ControlClick, Edit1, Cimatron Explorer, , , 1,
             Sleep, 100
             Send {RIGHT}
-            ;Send, %NcName%_NC ;NOVO
             Send {BACKSPACE}
             Send {BACKSPACE}
             Send {BACKSPACE}
@@ -80,7 +76,6 @@ Return
         tt = Cimatron 14.0 SP5P1 ahk_class CimatronE Mutext x64
         WinWait, %tt%
         IfWinNotActive, %tt%,, WinActivate, %tt%
-            ;MouseClick, L, 686, 47, 1, 1
         Sleep, 150
         MouseClick, L, 228, 86, 1, 1
         Sleep, 150
@@ -102,20 +97,17 @@ Return
         WinWait, %tt%
         IfWinNotActive, %tt%,, WinActivate, %tt%
             Sleep, 1000
-        KeyWait, LButton, D ; Wait for the left mouse button to be pressed down.
+        KeyWait, LButton, D 
         Sleep, 1000
-
-        ;PartName() ; COLETA NOME DO ARQUIVO
-        ;MsgBox, %NcName%
 
         Send, {ENTER}{ENTER}
         Sleep, 50
         WinWait, Cimatron,
         WinActivate Cimatron,
         Sleep, 1000
-        Send, {I} ; vista de y
-        KeyWait, RButton, D ; Wait for the left mouse button to be pressed down.
-        KeyWait, LButton, D ; Wait for the left mouse button to be pressed down.
+        Send, {I} 
+        KeyWait, RButton, D 
+        KeyWait, LButton, D 
         Sleep, 100
         ControlClick, Button1, Feature Guide, , , 2,
         WinWait, Cimatron,
@@ -129,37 +121,7 @@ Return
 
 return
 
-; ~t::		;trima superficies
-; 	IfWinActive, ahk_class CimatronE Mutext x64
-; 		Loop { ;*[cimatron]
-
-; 			IfWinExist, Feature Guide, Trim Face,{
-
-; 				WinWait, Feature Guide, Trim Face 
-; 				Sleep, 100
-; 				Send {MButton}
-; 				Sleep, 100
-; 				MouseClick, left 
-; 				Sleep, 100
-; 				MouseClick, right
-; 				WinActivate, FLT, Trim Face
-; 				Sleep, 40
-; 				Send, {RIGHT}
-; 				Sleep, 40
-; 				Send, {SPACE}
-; 				return
-
-; 			} else{
-; 				IfWinActive, ahk_class CimatronE Mutext x64
-; 					Send, {CTRLDOWN}{SHIFTDOWN}t{SHIFTUP}{CTRLUP}
-; 				return
-
-; 			}
-
-; 		}
-; 	return
-
-::esq::	;programa esquerdo 1 ou 2 progs
+::esq::	
     InputBox, VarEsq, Qnt Espelhos, Digite a quantidade de espelhos:,,200,150,,,,,1
     if (VarEsq = 1 || VarEsq = 2)
         esqset(VarEsq)
@@ -170,8 +132,6 @@ return
 F3::
     {
         ncContract(),desb()
-        ; Sleep, 500
-        ; exec()
         return
     }
 F8:: 
@@ -187,39 +147,6 @@ EletrodeReport:
     printNc()
 Return
 F7:: exec()
-; F9::
-
-;     Send, ^c
-;     ClipWait, 2
-;     ControlGetText, var, ToolbarWindow323, A
-;     var2 := StrReplace(var, "Endereço: ")
-;     ;ToolTip, %var2%\NewFolder
-;     ; ToolTip, %Clipboard%
-;     InputBox, NamePath, archives, nome de arquivo
-;     FileCreateDir, %var2%\Pos_%NamePath%\Arquivos
-;     FileCreateDir, %var2%\Pos_%NamePath%\Docs
-;     FileMove, %Clipboard%, %var2%\Pos_%NamePath%\Arquivos
-;     send, {Down}
-;     sleep, 100
-;     send, {Up}
-; Return
-
-; F9::
-; 	global varName
-; 	global varLength
-; 	InputBox, varName, Substituir:,Digite o valor a substituir ,,,height 150,,,,,% Clipboard
-; 	StringLen, varLength, varName
-; 	MsgBox, %varLength%
-; 	return
-
-; F10::
-;     if(varName){
-;         extrutura()
-;         return
-;     }else{
-;         MsgBox, nenhuma os selecionada
-;         return
-;     }
 
 F11::
     if(varName){
@@ -382,27 +309,9 @@ rep() {
 
     Sleep, 100
 
-    MouseClick, L, 188, 226, 1, 1 ;SELECIONA PRIMEIRO PROGRAMA
+    MouseClick, L, 188, 226, 1, 1 
     Sleep, 100
-    MouseClick, L, 425, 79, 1, 1 ; CLICA NO ICONE "HIDE ALL PROCEDURES MOTIONS"
-    ; MouseClick, L, 188, 226, 1, 1
-
-    ; tt = NC Process Manager ahk_class #32770
-    ; WinWait, %tt%
-    ; IfWinNotActive, %tt%,, WinActivate, %tt%
-
-    ; Sleep, 100
-
-    ; MouseClick, R, 188, 226, 1, 1
-
-    ; Sleep, 100
-
-    ; MouseClick, L, 262, 395, 1, 1
-
-    ; Sleep, 100
-
-    ; MouseClick, L, 447, 541, 1, 1
-
+    MouseClick, L, 425, 79, 1, 1 
     tt = ahk_class CimatronE Mutext x64
     WinWait, %tt%
     IfWinNotActive, %tt%,, WinActivate, %tt%
@@ -432,15 +341,8 @@ rep() {
     tt = GPP2 - Input = 
     WinWait, %tt%
     IfWinNotActive, %tt%,, WinActivate, %tt%
-
     Sleep, 100
-
-    ; MouseClick, L, 211, 66, 1, 1
     MouseClick, L, 211, 66, 1, 1
-    ; Sleep, 2000
-
-    ; MouseClick, L, 1896, 6, 1, 1
-
     tt = ahk_class XLMAIN
     WinWait, %tt%
     IfWinNotActive, %tt%,, WinActivate, %tt%
@@ -450,169 +352,6 @@ rep() {
 Return
 
 }
-
-; espPost(varPost){
-; 		timerSet = 100
-; 		TimerToTransition = 2000
-; 		If (varPost = 1){
-; 			SetTitleMatchMode, 2
-; 			CoordMode, Mouse, Screen
-
-; 			tt = NC Process Manager ahk_class #32770
-; 			WinWait, %tt%
-; 			IfWinNotActive, %tt%,, WinActivate, %tt%
-
-; 			MouseClick, L, 200, 266, 1, 1
-
-; 			MouseClick, L, 200, 266, 1, 1
-
-; 			tt = ahk_class CimatronE Mutext x64
-; 			WinWait, %tt%
-; 			IfWinNotActive, %tt%,, WinActivate, %tt%
-
-; 			Sleep, TimerToTransition
-; 			;MsgBox, "TIMER 1"
-
-; 			MouseClick, L, 407, 377, 1, 1
-
-; 			tt = ahk_class CimatronE Mutext x64
-; 			WinWait, %tt%
-; 			IfWinNotActive, %tt%,, WinActivate, %tt%
-
-; 			Sleep, timerSet
-
-; 			MouseClick, L, 640, 300, 1, 1 ;CLICA NA CAIXA 1
-
-; 			tt = Procedure Selection ahk_class #32770
-; 			WinWait, %tt%
-; 			IfWinNotActive, %tt%,, WinActivate, %tt%
-
-; 			Sleep, timerSet
-
-; 			ControlSend, Button7, %A_Space%, Procedure Selection ahk_class #32770 ;ok				
-; 			; MouseClick, L, 605, 449, 1, 1 ;ok
-
-; 			tt = ahk_class CimatronE Mutext x64
-; 			WinWait, %tt%
-; 			IfWinNotActive, %tt%,, WinActivate, %tt%
-
-; 			Sleep, timerSet
-
-; 			MouseClick, L, 338, 201, 1, 1
-
-; 			Sleep, timerSet
-
-; 			tt = NC Process Manager ahk_class #32770
-; 			WinWait, %tt%
-; 			IfWinNotActive, %tt%,, WinActivate, %tt%
-
-; 			Sleep, timerSet
-; 			Return
-; 		}else If (varPost = 2){
-; 			SetTitleMatchMode, 2
-; 			CoordMode, Mouse, Screen
-
-; 			tt = NC Process Manager ahk_class #32770
-; 			WinWait, %tt%
-; 			IfWinNotActive, %tt%,, WinActivate, %tt%
-
-; 			Sleep, timerSet
-
-; 			MouseClick, L, 192, 288, 1, 1
-
-; 			MouseClick, L, 192, 288, 1, 1
-
-; 			tt = ahk_class CimatronE Mutext x64
-; 			WinWait, %tt%
-; 			IfWinNotActive, %tt%,, WinActivate, %tt%
-
-; 			Sleep, TimerToTransition
-; 			;MsgBox, "TIMER 2"
-
-; 			MouseClick, L, 443, 379, 1, 1
-
-; 			Sleep, timerSet
-
-; 			MouseClick, L, 642, 298, 1, 1
-
-; 			tt = Procedure Selection ahk_class #32770
-; 			WinWait, %tt%
-; 			IfWinNotActive, %tt%,, WinActivate, %tt%
-
-; 			;Sleep, TimerToTransition
-; 			;MsgBox, "TIMER 3"
-
-; 			ControlSend, Button7, %A_Space%, Procedure Selection ahk_class #32770 ;ok
-; 			;MouseClick, L, 605, 439, 1, 1 ;OK
-
-; 			tt = ahk_class CimatronE Mutext x64
-; 			WinWait, %tt%
-; 			IfWinNotActive, %tt%,, WinActivate, %tt%
-
-; 			;Sleep, TimerToTransition
-; 			;MsgBox, "TIMER 4"
-
-; 			MouseClick, L, 338, 201, 1, 1
-
-; 			;Sleep, TimerToTransition
-; 			;MsgBox, "TIMER 5"
-
-; 			tt = NC Process Manager ahk_class #32770
-; 			WinWait, %tt%
-; 			IfWinNotActive, %tt%,, WinActivate, %tt%
-
-; 			Sleep, TimerToTransition
-; 			;MsgBox, "TIMER 6"
-
-; 			MouseClick, L, 219, 327, 1, 1
-
-; 			MouseClick, L, 219, 327, 1, 1
-
-; 			tt = ahk_class CimatronE Mutext x64
-; 			WinWait, %tt%
-; 			IfWinNotActive, %tt%,, WinActivate, %tt%
-
-; 			Sleep, TimerToTransition
-; 			;MsgBox, "TIMER 7"
-
-; 			MouseClick, L, 407, 377, 1, 1
-
-; 			tt = ahk_class CimatronE Mutext x64
-; 			WinWait, %tt%
-; 			IfWinNotActive, %tt%,, WinActivate, %tt%
-
-; 			;Sleep, TimerToTransition
-; 			;MsgBox, "TIMER 8"
-
-; 			MouseClick, L, 642, 318, 1, 1
-
-; 			tt = Procedure Selection ahk_class #32770
-; 			WinWait, %tt%
-; 			IfWinNotActive, %tt%,, WinActivate, %tt%
-
-; 			Sleep, timerSet
-; 			ControlSend, Button7, %A_Space%, Procedure Selection ahk_class #32770 ;ok				
-; 			; MouseClick, L, 605, 443, 1, 1 ;OK
-
-; 			tt = ahk_class CimatronE Mutext x64
-; 			WinWait, %tt%
-; 			IfWinNotActive, %tt%,, WinActivate, %tt%
-
-; 			Sleep, timerSet
-
-; 			MouseClick, L, 338, 201, 1, 1
-
-; 			Sleep, timerSet
-
-; 			tt = NC Process Manager ahk_class #32770
-; 			WinWait, %tt%
-; 			IfWinNotActive, %tt%,, WinActivate, %tt%
-
-; 			Sleep, timerSet
-; 			Return
-; 			}
-; 			Return
-; }
 
 espPost(varPost){
     timerSet = 100
@@ -633,7 +372,7 @@ espPost(varPost){
         WinWait, %tt%
         IfWinNotActive, %tt%,, WinActivate, %tt%
 
-        loop,	;PROCURA IMAGEM TRANSFORM
+        loop,
         {
             ImageSearch, FoundX,, 50,80, 230, 230, %A_ScriptDir%\IMAGE_SEARCH\transform.bmp	
             sleep 100
@@ -641,42 +380,27 @@ espPost(varPost){
                 Break
             }
         }
-        ; Sleep, TimerToTransition
-        ;MsgBox, "TIMER 1"
-
         MouseClick, L, 407, 377, 1, 1
 
         tt = ahk_class CimatronE Mutext x64
         WinWait, %tt%
         IfWinNotActive, %tt%,, WinActivate, %tt%
-
         Sleep, timerSet
-
-        MouseClick, L, 640, 300, 1, 1 ;CLICA NA CAIXA 1
-
+        MouseClick, L, 640, 300, 1, 1 
         tt = Procedure Selection ahk_class #32770
         WinWait, %tt%
         IfWinNotActive, %tt%,, WinActivate, %tt%
-
         Sleep, timerSet
-
-        ControlSend, Button7, %A_Space%, Procedure Selection ahk_class #32770 ;ok				
-        ; MouseClick, L, 605, 449, 1, 1 ;ok
-
+        ControlSend, Button7, %A_Space%, Procedure Selection ahk_class #32770
         tt = ahk_class CimatronE Mutext x64
         WinWait, %tt%
         IfWinNotActive, %tt%,, WinActivate, %tt%
-
         Sleep, timerSet
-
         MouseClick, L, 338, 201, 1, 1
-
         Sleep, timerSet
-
         tt = NC Process Manager ahk_class #32770
         WinWait, %tt%
         IfWinNotActive, %tt%,, WinActivate, %tt%
-
         Sleep, timerSet
         Return
     }else If (varPost = 2){
@@ -697,7 +421,7 @@ espPost(varPost){
         WinWait, %tt%
         IfWinNotActive, %tt%,, WinActivate, %tt%
 
-        loop,	;PROCURA IMAGEM TRANSFORM
+        loop,
         {
             ImageSearch, FoundX,, 50,80, 230, 230, %A_ScriptDir%\IMAGE_SEARCH\transform.bmp	
             sleep 100
@@ -705,55 +429,27 @@ espPost(varPost){
                 Break
             }
         }
-        ; Sleep, TimerToTransition
-        ;MsgBox, "TIMER 2"
-
         MouseClick, L, 443, 379, 1, 1
-
         Sleep, timerSet
-
         MouseClick, L, 642, 298, 1, 1
-
         tt = Procedure Selection ahk_class #32770
         WinWait, %tt%
         IfWinNotActive, %tt%,, WinActivate, %tt%
-
-        ;Sleep, TimerToTransition
-        ;MsgBox, "TIMER 3"
-
-        ControlSend, Button7, %A_Space%, Procedure Selection ahk_class #32770 ;ok
-        ;MouseClick, L, 605, 439, 1, 1 ;OK
-
-        ;Sleep, TimerToTransition
-        ;MsgBox, "TIMER 4"
-
+        ControlSend, Button7, %A_Space%, Procedure Selection ahk_class #32770
         MouseClick, L, 338, 201, 1, 1
-
         tt = NC Process Manager ahk_class #32770
         WinWait, %tt%
         IfWinNotActive, %tt%,, WinActivate, %tt%
-
-        ;Sleep, TimerToTransition
-        ;MsgBox, "TIMER 5"
-        ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
         WinWaitClose, Procedure Selection ahk_class #32770
-        ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
         tt = NC Process Manager ahk_class #32770
         WinWait, %tt%
         IfWinNotActive, %tt%,, WinActivate, %tt%
-
-        ; Sleep, TimerToTransition
-        ; MsgBox, "TIMER 6"
-
         MouseClick, L, 219, 327, 1, 1
-
         MouseClick, L, 219, 327, 1, 1
-
         tt = ahk_class CimatronE Mutext x64
         WinWait, %tt%
         IfWinNotActive, %tt%,, WinActivate, %tt%
-
-        loop,	;PROCURA IMAGEM TRANSFORM
+        loop,
         {
             ImageSearch, FoundX,, 50,80, 230, 230, %A_ScriptDir%\IMAGE_SEARCH\transform.bmp	
             sleep 100
@@ -767,34 +463,21 @@ espPost(varPost){
         tt = ahk_class CimatronE Mutext x64
         WinWait, %tt%
         IfWinNotActive, %tt%,, WinActivate, %tt%
-
-        ;Sleep, TimerToTransition
-        ;MsgBox, "TIMER 8"
-
         MouseClick, L, 642, 318, 1, 1
-
         tt = Procedure Selection ahk_class #32770
         WinWait, %tt%
         IfWinNotActive, %tt%,, WinActivate, %tt%
-
         Sleep, timerSet
-        ControlSend, Button7, %A_Space%, Procedure Selection ahk_class #32770 ;ok				
-        ; MouseClick, L, 605, 443, 1, 1 ;OK
-
+        ControlSend, Button7, %A_Space%, Procedure Selection ahk_class #32770
         tt = ahk_class CimatronE Mutext x64
         WinWait, %tt%
         IfWinNotActive, %tt%,, WinActivate, %tt%
-
         Sleep, timerSet
-
         MouseClick, L, 338, 201, 1, 1
-
         Sleep, timerSet
-
         tt = NC Process Manager ahk_class #32770
         WinWait, %tt%
         IfWinNotActive, %tt%,, WinActivate, %tt%
-
         Sleep, timerSet
         Return
     }
@@ -844,13 +527,11 @@ esqSet(VarEsq){
             Sleep, 100
             MouseClick, L, 34, 188, 1, 1
             WinWait, NC Template
-            ; Sleep, 100
             Send, {Tab}
             Send, {Tab}
             Send, {End}
             Send, {ENTER}
             WinWait, Templates Selection
-            ; Sleep, 100
             Send, {ShiftDown}{Tab}{Tab}{ShiftUp}
             Send, {Enter}
             WinWaitClose, Templates Selection
@@ -887,6 +568,33 @@ printNc(){
 Return
 }
 
+^Home::ExitApp
+F1::ncContract()Return
+PartName(){
+    ClipboardBkp := % Clipboard
+    IfWinNotActive, Cimatron Explorer
+        Return
+    Send, ^c
+    Clipwait						
+    SplitPath, Clipboard, name
+    clipboard := name		
+    StringSplit, word_array, name, .,
+    NcName := % word_array1
+    Clipboard := % ClipboardBkp
+Return NcName
+}
+
+~XButton1::
+    KeyWait, XButton1, U
+    KeyWait, XButton1, D, T0.2
+    If (ErrorLevel = 0)
+        send, {F8}
+return
+
+XButton2:: Send, {F6}
+MsgBox, OI
+
+
 ShowTip(s:="", pos:= "X1025y5", color:="Red|00FFFF") {
     static bak, idx
     if (bak=color "," pos "," s)
@@ -896,7 +604,6 @@ ShowTip(s:="", pos:= "X1025y5", color:="Red|00FFFF") {
     Gui, ShowTip: Destroy
     if (s="")
         return
-    ; WS_EX_NOACTIVATE:=0x08000000, WS_EX_TRANSPARENT:=0x20
     Gui, ShowTip: +LastFound +AlwaysOnTop +ToolWindow -Caption +E0x08000020
     Gui, ShowTip: Color, FFFFF0
     WinSet, TransColor, FFFFF0 150
@@ -912,46 +619,3 @@ ShowTip_ChangeColor:
     GuiControl, ShowTip: Font, Static1
 return
 }
-
-^Home::ExitApp
-F1::ncContract()Return
-; ~i::
-; ControlSend,Afx:0000000140000000:2b:0000000000010003:0000000000000000:00000000000000001,I, ahk_class CimatronE Mutext x64
-; Return
-PartName(){
-    ClipboardBkp := % Clipboard
-    IfWinNotActive, Cimatron Explorer
-        Return
-    Send, ^c
-    Clipwait						; Wait until Clipboard holds contents
-    SplitPath, Clipboard, name		; get filename - clipboard holds complete file path
-    clipboard := name				; assign filename to clipboard for pasting
-    StringSplit, word_array, name, ., ; Omits periods.
-    NcName := % word_array1
-    ;MsgBox, %NcName%
-    Clipboard := % ClipboardBkp
-Return NcName
-}
-
-~XButton1::
-    KeyWait, XButton1, U
-    KeyWait, XButton1, D, T0.2
-    If (ErrorLevel = 0)
-        send, {F8}
-return
-
-; ImageClick(image,X,Y,Xx,Yy){
-; 	img := %A_ScriptDir%\IMAGE_SEARCH\%image%.bmp
-; 	loop,	;PROCURA IMAGEM TRANSFORM
-; 	{
-; 	ImageSearch, FoundX,FoundY, X,Y, Xx, Yy, %A_ScriptDir%\IMAGE_SEARCH\transform.bmp	
-; 	sleep 100
-; 	IF (Found>1){
-; 		ControlClick, %FoundX% %FoundY%,
-; 		}
-; 	}
-
-; }
-
-XButton2:: Send, {F6}
-MsgBox, OI
